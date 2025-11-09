@@ -114,10 +114,26 @@ export const App = () => {
             </div>
             <div className={styles.field}>
                 <label>User profile</label>
+                <button className={styles.usernameHelpButton} popoverTarget="usernameHelp">❔</button>
                 <input
                     value={userProfileLink}
+                    title="Paste Telegram profile link or username"
                     onChange={(e) => setUserProfileLink(e.target.value)}
                 />
+            </div>
+            <div className={styles.usernamePopover} id="usernameHelp" popover="hint">
+                User profile should be either:
+                <ul>
+                    <li>
+                        <code>@durov</code>
+                    </li>
+                    <li>
+                        OR <code>https://t.me/durov</code>
+                    </li>
+                    <li>
+                        OR <code>t.me/durov</code>
+                    </li>
+                </ul>
             </div>
             <div className={styles.fieldGroup}>
                 <label>Text</label>

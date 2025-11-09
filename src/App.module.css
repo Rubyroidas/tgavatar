@@ -16,8 +16,37 @@
     }
 }
 
-.fieldGroup {
+.fieldComment {
+    @apply bg-gray-700 border-l-gray-200 border-l-6 text-gray-400 px-2;
+}
 
+.usernameHelpButton {
+    anchor-name: --username-help;
+    @apply rounded-full;
+}
+
+.usernamePopover {
+    position: absolute;
+    position-anchor: --username-help;
+    position-area: top left;
+    top: anchor(bottom);
+    left: anchor(left);
+    @apply p-4;
+    width: max-content;
+
+    &:popover-open {
+        display: block;
+    }
+    &::backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    & > ul {
+        @apply text-gray-200 py-0 my-0 pl-6;
+    }
+}
+
+.fieldGroup {
     & > label {
         @apply font-bold;
     }

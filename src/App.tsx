@@ -28,6 +28,7 @@ export const App = () => {
     const [ username, setUsername ] = useState('');
     const [ userAvatarUrl, setUserAvatarUrl ] = useState('');
     const [ text, setText ] = useState('GD');
+    const [ fontSize, setFontSize ] = useState(48);
     const [ labelDistance, setLabelDistance ] = useState(80);
     const [ labelAngle, setLabelAngle ] = useState(108);
     const [ borderWidth, setBorderWidth ] = useState(12);
@@ -138,6 +139,17 @@ export const App = () => {
                         onChange={(e) => setText(e.target.value)}
                     />
                 </div>
+                <div className={styles.field}>
+                    <label>Font size</label>
+                    <input
+                        type="range"
+                        value={fontSize}
+                        min={10}
+                        max={100}
+                        step={1}
+                        onChange={(e) => setFontSize(parseInt(e.target.value, 10))}
+                    />
+                </div>
             </div>
             <div className={styles.fieldGroup}>
                 <label>Border</label>
@@ -210,6 +222,7 @@ export const App = () => {
                 <Avatar
                     url={userAvatarUrl}
                     text={text}
+                    fontSize={fontSize}
                     labelDistance={labelDistance}
                     labelAngle={labelAngle}
                     borderColor={borderColor}

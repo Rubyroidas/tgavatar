@@ -6,6 +6,7 @@ export const R = SIZE / 2;
 type AvatarProps = {
     url: string;
     text: string;
+    fontSize: number;
     // label distance from center in pixels
     labelDistance: number;
     labelAngle: number;
@@ -14,7 +15,7 @@ type AvatarProps = {
     textColor: string;
 };
 export const Avatar = (props: AvatarProps) => {
-    const { url, text, labelDistance, labelAngle, borderColor, borderWidth, textColor } = props;
+    const { url, text, fontSize, labelDistance, labelAngle, borderColor, borderWidth, textColor } = props;
     const labelAngleRad = labelAngle / 180 * Math.PI;
     const deltaAngle = Math.acos(labelDistance / R);
     const startAngle = labelAngleRad - deltaAngle;
@@ -24,7 +25,6 @@ export const Avatar = (props: AvatarProps) => {
     const ex = R + (R * Math.cos(endAngle));
     const ey = R + (R * Math.sin(endAngle));
     const labelArcParams = [ 'M', sx, sy, 'A', R, R, 0, 0, 1, ex, ey, 'L', sx, sy, 'Z', ].join(' ');
-    const fontSize = 48;
     const fontShiftCoeff = 1;
     const textOffsetX = fontSize * fontShiftCoeff * Math.cos(labelAngleRad);
     const textOffsetY = fontSize * fontShiftCoeff * Math.sin(labelAngleRad);

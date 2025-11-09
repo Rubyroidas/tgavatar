@@ -1,0 +1,21 @@
+@reference "tailwindcss";
+
+.container {
+    @apply p-4 w-[640px] flex flex-col bg-blue-700;
+}
+
+.header {
+    @apply text-white text-2xl font-semibold mb-4;
+}
+
+.avatarPreview {
+    width: 320px;
+}
+
+.field {
+    @apply flex flex-row gap-2;
+}
+
+.fieldValuePreview {
+    @apply font-mono;
+}

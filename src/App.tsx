@@ -1,76 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Avatar, R } from './Avatar';
 import styles from './App.module.css';
-
-type AvatarProps = {
-    url: string;
-    text: string;
-    borderColor: string;
-    borderWidth: number;
-    textColor: string;
-};
-const Avatar = ({ url, text, borderColor, borderWidth, textColor }: AvatarProps) => {
-    const size = 300;
-    const radius = size / 2;
-    return (
-        <svg viewBox={`0 0 ${size} ${size}`} xmlns="http://www.w3.org/2000/svg" className={styles.avatarPreview}>
-            <defs>
-                <mask id="combinedMask">
-                    <circle cx={size / 2} cy={size / 2} r={radius} fill="white"/>
-                    <circle cx={size / 2} cy={size / 2} r={radius - borderWidth} fill="black"/>
-
-                    <path
-                        d="M 236.0 276.4 A 150 150 0 0 1 -1.0 201.3 L 236.0 276.4 Z"
-                        fill="white"
-                    />
-                </mask>
-                <mask id="avatarMask">
-                    <circle cx={size / 2} cy={size / 2} r={radius} fill="white"/>
-                </mask>
-
-                <path id="textPath" d="M 236.0 276.4 L -1.0 201.3" fill="none"/>
-            </defs>
-
-            <image
-                href={url}
-                x={0}
-                y={0}
-                width={size}
-                height={size}
-                mask="url(#avatarMask)"
-            />
-
-            <circle
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill={borderColor}
-                mask="url(#combinedMask)"
-            />
-
-            <circle
-                cx={size / 2}
-                cy={size / 2}
-                r={radius}
-                fill="none"
-                stroke={borderColor}
-                strokeWidth="1"
-                mask="url(#combinedMask)"
-            />
-
-            <text
-                fill={textColor}
-                fontSize="48"
-                fontWeight="bold"
-                fontFamily="Arial, sans-serif"
-                transform="translate(-10 40) rotate(180 117.5 238.85)">
-                <textPath href="#textPath" startOffset="50%" textAnchor="middle">
-                    {text}
-                </textPath>
-            </text>
-        </svg>
-
-    );
-}
 
 const loadImageAsBase64 = async (imageUrl: string) => {
     const image = new Image();
@@ -97,7 +27,9 @@ export const App = () => {
     const [ userProfileLink, setUserProfileLink ] = useState('@durov');
     const [ username, setUsername ] = useState('');
     const [ userAvatarUrl, setUserAvatarUrl ] = useState('');
-    const [ text, setText ] = useState('SAMPLE TEXT');
+    const [ text, setText ] = useState('GD');
+    const [ labelDistance, setLabelDistance ] = useState(80);
+    const [ labelAngle, setLabelAngle ] = useState(108);
     const [ borderWidth, setBorderWidth ] = useState(12);
     const [ borderColor, setBorderColor ] = useState('#ff0000');
     const [ textColor, setTextColor ] = useState('#ffffff');
@@ -106,7 +38,6 @@ export const App = () => {
         const originalUrl = `https://t.me/i/userpic/320/${username}.jpg`;
         const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(originalUrl)}`;
         try {
-            // const { url } = await loadImageAsBlob(proxyUrl);
             const url = await loadImageAsBase64(proxyUrl);
             setUserAvatarUrl(url);
         } catch (e) {
@@ -187,50 +118,87 @@ export const App = () => {
                     onChange={(e) => setUserProfileLink(e.target.value)}
                 />
             </div>
-            <div className={styles.field}>
+            <div className={styles.fieldGroup}>
                 <label>Text</label>
-                <input
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                />
-            </div>
-            <div className={styles.field}>
-                <label>Border color</label>
-                <div className={styles.fieldValuePreview}>
-                    {borderColor}
+                <div className={styles.field}>
+                    <label>Color</label>
+                    <div className={styles.fieldValuePreview}>
+                        {textColor}
+                    </div>
+                    <input
+                        type="color"
+                        value={textColor}
+                        onChange={(e) => setTextColor(e.target.value)}
+                    />
                 </div>
-                <input
-                    type="color"
-                    value={borderColor}
-                    onChange={(e) => setBorderColor(e.target.value)}
-                />
-            </div>
-            <div className={styles.field}>
-                <label>Border width</label>
-                <div className={styles.fieldValuePreview}>
-                    {borderWidth}
+                <div className={styles.field}>
+                    <label>Text</label>
+                    <input
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                    />
                 </div>
-                <input
-                    type="range"
-                    value={borderWidth}
-                    min={5}
-                    max={50}
-                    step={1}
-                    onChange={(e) => setBorderWidth(parseInt(e.target.value, 10))}
-                />
             </div>
-            <div className={styles.field}>
-                <label>Text color</label>
-                <div className={styles.fieldValuePreview}>
-                    {textColor}
+            <div className={styles.fieldGroup}>
+                <label>Border</label>
+                <div className={styles.field}>
+                    <label>Color</label>
+                    <div className={styles.fieldValuePreview}>
+                        {borderColor}
+                    </div>
+                    <input
+                        type="color"
+                        value={borderColor}
+                        onChange={(e) => setBorderColor(e.target.value)}
+                    />
                 </div>
-                <input
-                    type="color"
-                    value={textColor}
-                    onChange={(e) => setTextColor(e.target.value)}
-                />
+                <div className={styles.field}>
+                    <label>Width</label>
+                    <div className={styles.fieldValuePreview}>
+                        {borderWidth}
+                    </div>
+                    <input
+                        type="range"
+                        value={borderWidth}
+                        min={5}
+                        max={50}
+                        step={1}
+                        onChange={(e) => setBorderWidth(parseInt(e.target.value, 10))}
+                    />
+                </div>
             </div>
-            <div className="downloads">
+            <div className={styles.fieldGroup}>
+                <label>Label</label>
+                <div className={styles.field}>
+                    <label>Angle</label>
+                    <div className={styles.fieldValuePreview}>
+                        {labelAngle}&deg;
+                    </div>
+                    <input
+                        type="range"
+                        value={labelAngle}
+                        min={60}
+                        max={120}
+                        step={1}
+                        onChange={(e) => setLabelAngle(parseInt(e.target.value, 10))}
+                    />
+                </div>
+                <div className={styles.field}>
+                    <label>Distance from center</label>
+                    <div className={styles.fieldValuePreview}>
+                        {labelDistance}
+                    </div>
+                    <input
+                        type="range"
+                        value={labelDistance}
+                        min={0}
+                        max={R}
+                        step={1}
+                        onChange={(e) => setLabelDistance(parseInt(e.target.value, 10))}
+                    />
+                </div>
+            </div>
+            <div className={styles.downloads}>
                 <button onClick={handleDownloadAsSVG}>
                     SVG Download
                 </button>
@@ -238,17 +206,17 @@ export const App = () => {
                     PNG Download
                 </button>
             </div>
-            <div>
-                {userAvatarUrl && (
-                    <Avatar
-                        url={userAvatarUrl}
-                        text={text}
-                        borderColor={borderColor}
-                        borderWidth={borderWidth}
-                        textColor={textColor}
-                    />
-                )}
-            </div>
+            {userAvatarUrl && (
+                <Avatar
+                    url={userAvatarUrl}
+                    text={text}
+                    labelDistance={labelDistance}
+                    labelAngle={labelAngle}
+                    borderColor={borderColor}
+                    borderWidth={borderWidth}
+                    textColor={textColor}
+                />
+            )}
         </div>
     );
 };

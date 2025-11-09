@@ -8,14 +8,29 @@
     @apply text-white text-2xl font-semibold mb-4;
 }
 
-.avatarPreview {
-    width: 320px;
+.field {
+    @apply flex flex-row gap-2 py-1;
+
+    & > label {
+        flex: 1 1 auto;
+    }
 }
 
-.field {
-    @apply flex flex-row gap-2;
+.fieldGroup {
+
+    & > label {
+        @apply font-bold;
+    }
+
+    & > div {
+        @apply ml-2;
+    }
 }
 
 .fieldValuePreview {
     @apply font-mono;
+}
+
+.downloads {
+    @apply flex flex-row gap-2 py-1;
 }

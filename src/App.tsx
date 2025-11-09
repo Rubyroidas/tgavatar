@@ -59,10 +59,10 @@ const Avatar = ({ url, text, borderColor, borderWidth, textColor }: AvatarProps)
 
             <text
                 fill={textColor}
-                fontSize="20"
+                fontSize="48"
                 fontWeight="bold"
                 fontFamily="Arial, sans-serif"
-                transform="rotate(180 117.5 238.85) translate(2 -20)">
+                transform="translate(-10 40) rotate(180 117.5 238.85)">
                 <textPath href="#textPath" startOffset="50%" textAnchor="middle">
                     {text}
                 </textPath>

@@ -86,7 +86,7 @@ const loadImageAsBase64 = async (imageUrl: string) => {
         canvas.width = image.width;
         canvas.height = image.height;
         ctx.drawImage(image, 0, 0);
-        return canvas.toDataURL('image/png');
+        return canvas.toDataURL('image/png', 100);
     } catch (e) {
         console.error(e);
         return '';

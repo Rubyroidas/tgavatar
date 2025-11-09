@@ -166,7 +166,7 @@ export const App = () => {
             ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Draw image to fill canvas
             URL.revokeObjectURL(blobURL);
 
-            const url = canvas.toDataURL('image/png');
+            const url = canvas.toDataURL('image/png', 100);
             const link = document.createElement('a');
             link.href = url;
             link.download = `${username}-avatar.png`;

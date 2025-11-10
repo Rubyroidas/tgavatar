@@ -1,12 +1,11 @@
-﻿export const loadImageAsBase64 = async (imageUrl: string) => {
+﻿import { imageLoadPromise } from '../hooks/imageLoadPromise.ts';
+
+export const loadImageAsBase64 = async (imageUrl: string) => {
     const image = new Image();
     image.crossOrigin = 'anonymous';
     try {
-        await new Promise((resolve, reject) => {
-            image.onload = resolve;
-            image.onerror = reject;
-            image.src = imageUrl;
-        });
+        image.src = imageUrl;
+        await imageLoadPromise(image);
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d')!;
         canvas.width = image.width;

@@ -4,6 +4,7 @@ import styles from './App.module.css';
 import { useDropZone } from './hooks/useDropZone';
 import { loadImageAsBase64 } from './utils/loadImageAsBase64';
 import { blobToCanvas } from './hooks/blobToCanvas';
+import { imageLoadPromise } from './hooks/imageLoadPromise.ts';
 
 const MIN_ANGLE = 0;
 const MAX_ANGLE = 180;
@@ -83,7 +84,7 @@ export const App = () => {
         URL.revokeObjectURL(url);
     };
 
-    const handleDownloadAsPNG = () => {
+    const handleDownloadAsPNG = async () => {
         const svgElement = document.querySelector('svg');
         if (!svgElement) return;
         const size = svgElement.getBBox();
@@ -100,17 +101,16 @@ export const App = () => {
         const blobURL = URL.createObjectURL(blob);
 
         const image = new Image();
-        image.onload = () => {
-            ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Draw image to fill canvas
-            URL.revokeObjectURL(blobURL);
-
-            const url = canvas.toDataURL('image/png', 100);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `${username}-avatar.png`;
-            link.click();
-        };
         image.src = blobURL;
+        await imageLoadPromise(image);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height); // Draw image to fill canvas
+        URL.revokeObjectURL(blobURL);
+
+        const url = canvas.toDataURL('image/png', 100);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = `${username}-avatar.png`;
+        link.click();
     };
 
     return (

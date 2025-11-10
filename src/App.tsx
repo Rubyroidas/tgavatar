@@ -5,6 +5,7 @@ import { useDropZone } from './hooks/useDropZone';
 import { loadImageAsBase64 } from './utils/loadImageAsBase64';
 import { blobToCanvas } from './hooks/blobToCanvas';
 import { imageLoadPromise } from './hooks/imageLoadPromise.ts';
+import { cutCanvasToSquare } from './hooks/cutCanvasToSquare.ts';
 
 const MIN_ANGLE = 0;
 const MAX_ANGLE = 180;
@@ -36,8 +37,9 @@ export const App = () => {
     }
 
     const handleDrop = async (file: File) => {
-        const canvas = await blobToCanvas(file);
-        const url = canvas.toDataURL('image/png', 100);
+        const sourceCanvas = await blobToCanvas(file);
+        const squareCanvas = cutCanvasToSquare(sourceCanvas);
+        const url = squareCanvas.toDataURL('image/png', 100);
         setUserAvatarUrl(url);
     };
     const {isDraggingOver, ...dropZoneProps} = useDropZone({onDrop: handleDrop});

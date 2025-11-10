@@ -29,7 +29,7 @@ body, :root, #root {
 
 @media (prefers-color-scheme: light) {
     :root {
-        color: #213547;
+        color: #ffffff;
         background-color: #ffffff;
     }
 }

@@ -1,29 +1,19 @@
 import { useEffect, useState } from 'react';
 import { Avatar, R } from './Avatar';
 import styles from './App.module.css';
+import { useDropZone } from './hooks/useDropZone';
+import { loadImageAsBase64 } from './utils/loadImageAsBase64';
+import { blobToCanvas } from './hooks/blobToCanvas';
 
-const loadImageAsBase64 = async (imageUrl: string) => {
-    const image = new Image();
-    image.crossOrigin = 'anonymous';
-    try {
-        await new Promise((resolve, reject) => {
-            image.onload = resolve;
-            image.onerror = reject;
-            image.src = imageUrl;
-        });
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d')!;
-        canvas.width = image.width;
-        canvas.height = image.height;
-        ctx.drawImage(image, 0, 0);
-        return canvas.toDataURL('image/png', 100);
-    } catch (e) {
-        console.error(e);
-        return '';
-    }
-};
+const MIN_ANGLE = 0;
+const MAX_ANGLE = 180;
+const MIN_BORDER_WIDTH = 0;
+const MAX_BORDER_WIDTH = 50;
+const MIN_FONT_SIZE = 10;
+const MAX_FONT_SIZE = 100;
 
 export const App = () => {
+    const [ isDefaultUserProfile, setIsDefaultUserProfile ] = useState(true);
     const [ userProfileLink, setUserProfileLink ] = useState('@durov');
     const [ username, setUsername ] = useState('');
     const [ userAvatarUrl, setUserAvatarUrl ] = useState('');
@@ -35,7 +25,23 @@ export const App = () => {
     const [ borderColor, setBorderColor ] = useState('#ff0000');
     const [ textColor, setTextColor ] = useState('#ffffff');
 
-    const loadUserAvatarUrl = async (username: string) => {
+    const toggleAvatarSource = (isDefaultProfile: boolean) => {
+        if (isDefaultProfile) {
+            setUsername('durov');
+        } else {
+            setUsername('avatar');
+        }
+        setIsDefaultUserProfile(isDefaultProfile);
+    }
+
+    const handleDrop = async (file: File) => {
+        const canvas = await blobToCanvas(file);
+        const url = canvas.toDataURL('image/png', 100);
+        setUserAvatarUrl(url);
+    };
+    const {isDraggingOver, ...dropZoneProps} = useDropZone({onDrop: handleDrop});
+
+    const loadDefaultUserAvatarUrl = async (username: string) => {
         const originalUrl = `https://t.me/i/userpic/320/${username}.jpg`;
         const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(originalUrl)}`;
         try {
@@ -58,7 +64,7 @@ export const App = () => {
 
     useEffect(() => {
         if (username) {
-            loadUserAvatarUrl(username);
+            loadDefaultUserAvatarUrl(username);
         }
     }, [ username ]);
 
@@ -112,14 +118,31 @@ export const App = () => {
             <div className={styles.header}>
                 Telegram avatar border builder
             </div>
-            <div className={styles.field}>
-                <label>User profile</label>
-                <button className={styles.usernameHelpButton} popoverTarget="usernameHelp">❔</button>
-                <input
-                    value={userProfileLink}
-                    title="Paste Telegram profile link or username"
-                    onChange={(e) => setUserProfileLink(e.target.value)}
-                />
+            <div className={styles.fieldGroup}>
+                <label>User avatar</label>
+                <div className={styles.field}>
+                    <label>
+                        <input type="checkbox" checked={isDefaultUserProfile} onChange={e => toggleAvatarSource(e.target.checked)} />
+                        From user profile
+                    </label>
+                    {isDefaultUserProfile ? (
+                        <>
+                            <button className={styles.usernameHelpButton} popoverTarget="usernameHelp">❔</button>
+                            <input
+                                value={userProfileLink}
+                                title="Paste Telegram profile link or username"
+                                onChange={(e) => setUserProfileLink(e.target.value)}
+                            />
+                        </>
+                    ) : (
+                        <div
+                            {...dropZoneProps}
+                            className={styles.fileDropArea}
+                        >
+                            <div>Drop image here ...</div>
+                        </div>
+                    )}
+                </div>
             </div>
             <div className={styles.usernamePopover} id="usernameHelp" popover="hint">
                 User profile should be either:
@@ -160,8 +183,8 @@ export const App = () => {
                     <input
                         type="range"
                         value={fontSize}
-                        min={10}
-                        max={100}
+                        min={MIN_FONT_SIZE}
+                        max={MAX_FONT_SIZE}
                         step={1}
                         onChange={(e) => setFontSize(parseInt(e.target.value, 10))}
                     />
@@ -188,8 +211,8 @@ export const App = () => {
                     <input
                         type="range"
                         value={borderWidth}
-                        min={5}
-                        max={50}
+                        min={MIN_BORDER_WIDTH}
+                        max={MAX_BORDER_WIDTH}
                         step={1}
                         onChange={(e) => setBorderWidth(parseInt(e.target.value, 10))}
                     />
@@ -205,8 +228,8 @@ export const App = () => {
                     <input
                         type="range"
                         value={labelAngle}
-                        min={60}
-                        max={120}
+                        min={MIN_ANGLE}
+                        max={MAX_ANGLE}
                         step={1}
                         onChange={(e) => setLabelAngle(parseInt(e.target.value, 10))}
                     />

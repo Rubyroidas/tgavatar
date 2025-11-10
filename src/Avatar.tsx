@@ -33,8 +33,12 @@ export const Avatar = (props: AvatarProps) => {
         <svg width={`${SIZE}px`} height={`${SIZE}px`} viewBox={`0 0 ${SIZE} ${SIZE}`} xmlns="http://www.w3.org/2000/svg" className={styles.avatarPreview}>
             <defs>
                 <mask id="combinedMask">
-                    <circle cx={R} cy={R} r={R} fill="white"/>
-                    <circle cx={R} cy={R} r={R - borderWidth} fill="black"/>
+                    {borderWidth > 0 && (
+                        <>
+                            <circle cx={R} cy={R} r={R} fill="white"/>
+                            <circle cx={R} cy={R} r={R - borderWidth} fill="black"/>
+                        </>
+                    )}
 
                     <path
                         d={labelArcParams}

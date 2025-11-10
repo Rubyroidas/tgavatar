@@ -1,11 +1,11 @@
 @reference "tailwindcss";
 
 .container {
-    @apply p-4 flex flex-col bg-blue-700;
+    @apply p-4 flex flex-col bg-[#204050];
 }
 
 .header {
-    @apply text-white text-2xl font-semibold mb-4;
+    @apply text-white text-2xl font-semibold mb-4 mt-8;
 }
 
 .field {
@@ -22,7 +22,7 @@
 
 .usernameHelpButton {
     anchor-name: --username-help;
-    @apply rounded-full;
+    @apply rounded-full aspect-square;
 }
 
 .usernamePopover {
@@ -58,6 +58,38 @@
 
 .fieldValuePreview {
     @apply font-mono;
+}
+
+.fileDropArea {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    cursor: pointer;
+
+    & > div {
+        box-sizing: border-box;
+        background-color: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px;
+    }
+
+    /* duplicating for non-mobile to appear on hover */
+    @media (hover: hover) {
+        &:hover {
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.75);
+        }
+        &:hover > div {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+        }
+    }
 }
 
 .downloads {

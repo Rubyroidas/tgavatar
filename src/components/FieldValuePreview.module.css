@@ -1,0 +1,5 @@
+﻿@reference "tailwindcss";
+
+.fieldValuePreview {
+    @apply font-mono;
+}

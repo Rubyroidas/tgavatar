@@ -32,7 +32,6 @@ export const App = () => {
     // text
     const [ textColor, setTextColor ] = useState<ColorWithAlpha>({ color: '#ffffff', opacity: 100 });
     const [ text, setText ] = useState('GD');
-    const [ flipTextX, setFlipTextX ] = useState(false);
     const [ flipTextY, setFlipTextY ] = useState(false);
     const [ textOffsetY, setTextOffsetY ] = useState(40);
     const [ fontSize, setFontSize ] = useState(48);
@@ -43,9 +42,6 @@ export const App = () => {
     const [ labelColor, setLabelColor ] = useState<ColorWithAlpha>({ color: '#ff0000', opacity: 100 });
     const [ labelDistance, setLabelDistance ] = useState(80);
     const [ labelAngle, setLabelAngle ] = useState(108);
-
-    console.log('borderColor', borderColor);
-    console.log('textColor', textColor);
 
     const toggleAvatarSource = (isDefaultProfile: boolean) => {
         if (isDefaultProfile) {
@@ -157,14 +153,6 @@ export const App = () => {
                                 onChange={(e) => setText(e.target.value)}
                             />
                         </Field>
-                        {/*
-                        <Field label="Flip X">
-                            <input
-                                type="checkbox"
-                                checked={flipTextX}
-                                onChange={e => setFlipTextX(e.target.checked)}
-                            />
-                        </Field>
                         <Field label="Flip Y">
                             <input
                                 type="checkbox"
@@ -172,7 +160,6 @@ export const App = () => {
                                 onChange={e => setFlipTextY(e.target.checked)}
                             />
                         </Field>
-                        */}
                         <Field label="Y offset">
                             <FieldValuePreview>
                                 {textOffsetY}
@@ -266,10 +253,10 @@ export const App = () => {
                         </Field>
                     </FieldGroup>
                     <div className={styles.downloads}>
-                        <button onClick={() => handleDownloadAsSVG(username)}>
+                        <button onClick={() => handleDownloadAsSVG('avatar', username)}>
                             SVG Download
                         </button>
-                        <button onClick={() => handleDownloadAsPNG(username)}>
+                        <button onClick={() => handleDownloadAsPNG('avatar', username)}>
                             PNG Download
                         </button>
                     </div>
@@ -286,7 +273,6 @@ export const App = () => {
                         borderColor={borderColor}
                         borderWidth={borderWidth}
                         textColor={textColor}
-                        flipTextX={flipTextX}
                         flipTextY={flipTextY}
                     />
                 )}

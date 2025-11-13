@@ -12,7 +12,6 @@ type AvatarProps = {
     textOffsetY: number;
     fontSize: number;
     textColor: ColorWithAlpha;
-    flipTextX: boolean;
     flipTextY: boolean;
     // label distance from center in pixels
     labelColor: ColorWithAlpha;
@@ -33,7 +32,6 @@ export const Avatar = (props: AvatarProps) => {
         borderColor,
         borderWidth,
         textColor,
-        flipTextX,
         flipTextY,
     } = props;
     const labelAngleRad = labelAngle / 180 * Math.PI;
@@ -45,11 +43,22 @@ export const Avatar = (props: AvatarProps) => {
     const ex = R + ((R - borderWidth) * Math.cos(endAngle));
     const ey = R + ((R - borderWidth) * Math.sin(endAngle));
     const labelArcParams = [ 'M', sx, sy, 'A', (R - borderWidth), (R - borderWidth), 0, 0, 1, ex, ey, 'L', sx, sy, 'Z', ].join(' ');
+    const textAngle = labelAngle + (flipTextY ? 180 : 0) - 90;
     const textOffsetX = userTextOffsetY * Math.cos(labelAngleRad);
     const textOffsetY = userTextOffsetY * Math.sin(labelAngleRad);
+    const textX = (sx + ex) / 2 + textOffsetX;
+    const textY = (sy + ey) / 2 + textOffsetY;
 
     return (
-        <svg width={`${SIZE}px`} height={`${SIZE}px`} viewBox={`0 0 ${SIZE} ${SIZE}`} xmlns="http://www.w3.org/2000/svg" className={styles.avatarPreview}>
+        <svg
+            id="avatar"
+            width={`${SIZE}px`}
+            height={`${SIZE}px`}
+            viewBox={`0 0 ${SIZE} ${SIZE}`}
+            xmlns="http://www.w3.org/2000/svg"
+            className={styles.avatarPreview}
+            style={{background: 'transparent'}}
+        >
             <defs>
                 <mask id="borderMask">
                     <circle
@@ -81,7 +90,6 @@ export const Avatar = (props: AvatarProps) => {
                     fill="none"
                 />
             </defs>
-
 
             <image
                 href={url}
@@ -125,14 +133,14 @@ export const Avatar = (props: AvatarProps) => {
                     fontSize={`${fontSize}px`}
                     fontWeight="bold"
                     fontFamily="Arial, sans-serif"
-                    transform={`translate(${textOffsetX} ${textOffsetY})`}
+                    startOffset="50%"
+                    alignmentBaseline="central"
+                    textAnchor="middle"
+                    transform={`rotate(${textAngle} ${textX} ${textY}) translate(${textX}, ${textY})`}
                 >
-                    <textPath href="#textPath" startOffset="50%" alignmentBaseline="central" textAnchor="middle">
-                        {text}
-                    </textPath>
+                    {text}
                 </text>
             </g>
-            {/*<path id="debugLine" d={`M ${sx} ${sy} L ${ex} ${ey}`} stroke="blue" strokeWidth="2"/>*/}
         </svg>
 
     );

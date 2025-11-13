@@ -1,5 +1,5 @@
-﻿export const handleDownloadAsSVG = (username: string) => {
-    const svg = document.querySelector('svg');
+﻿export const handleDownloadAsSVG = (svgId: string, username: string) => {
+    const svg = document.querySelector(`#${svgId}`) as SVGSVGElement;
     if (!svg) return;
     const svgData = new XMLSerializer().serializeToString(svg);
     const blob = new Blob([svgData], { type: 'image/svg+xml' });

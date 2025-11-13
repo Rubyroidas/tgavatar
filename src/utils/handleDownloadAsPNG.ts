@@ -1,7 +1,7 @@
 ﻿import { imageLoadPromise } from '../hooks/imageLoadPromise';
 
-export const handleDownloadAsPNG = async (username: string) => {
-    const svgElement = document.querySelector('svg');
+export const handleDownloadAsPNG = async (svgId: string, username: string) => {
+    const svgElement = document.querySelector(`#${svgId}`) as SVGSVGElement;
     if (!svgElement) return;
     const size = svgElement.getBBox();
 
@@ -11,7 +11,7 @@ export const handleDownloadAsPNG = async (username: string) => {
     const canvas = document.createElement('canvas');
     canvas.width = size.width;
     canvas.height = size.height;
-    const ctx = canvas.getContext('2d')!;
+    const ctx = canvas.getContext('2d', { alpha: true })!;
     const outerHTML = svg.outerHTML;
     const blob = new Blob([outerHTML], { type: 'image/svg+xml;charset=utf-8' });
     const blobURL = URL.createObjectURL(blob);

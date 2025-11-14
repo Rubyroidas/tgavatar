@@ -70,7 +70,7 @@ export const Avatar = (props: AvatarProps) => {
                     <circle
                         cx={R}
                         cy={R}
-                        r={R - borderWidth}
+                        r={R - borderWidth - 0.25}
                         fill="black"
                     />
                 </mask>

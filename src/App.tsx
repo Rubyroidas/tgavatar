@@ -153,14 +153,14 @@ export const App = () => {
                                 onChange={(e) => setText(e.target.value)}
                             />
                         </Field>
-                        <Field label="Flip Y">
+                        <Field label="Flip verically">
                             <input
                                 type="checkbox"
                                 checked={flipTextY}
                                 onChange={e => setFlipTextY(e.target.checked)}
                             />
                         </Field>
-                        <Field label="Y offset">
+                        <Field label="Offset from center">
                             <FieldValuePreview>
                                 {textOffsetY}
                             </FieldValuePreview>

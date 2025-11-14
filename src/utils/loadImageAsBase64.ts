@@ -1,4 +1,4 @@
-﻿import { imageLoadPromise } from '../hooks/imageLoadPromise.ts';
+﻿import { imageLoadPromise } from '../hooks/imageLoadPromise';
 
 export const loadImageAsBase64 = async (imageUrl: string) => {
     const image = new Image();

@@ -1,0 +1,5 @@
+﻿@reference "tailwindcss";
+
+.colorInput {
+    @apply border-none outline-0 p-0 m-0;
+}

@@ -4,16 +4,12 @@
     @apply p-4 flex flex-col bg-[#204050];
 }
 
-.header {
-    @apply text-white text-2xl font-semibold mb-4 mt-8;
+.layout {
+    @apply flex flex-col md:flex-row gap-4;
 }
 
-.field {
-    @apply flex flex-row gap-2 py-1;
-
-    & > label {
-        flex: 1 1 auto;
-    }
+.settingsForm {
+    @apply flex flex-col gap-2;
 }
 
 .fieldComment {
@@ -44,20 +40,6 @@
     & > ul {
         @apply text-gray-200 py-0 my-0 pl-6;
     }
-}
-
-.fieldGroup {
-    & > label {
-        @apply font-bold;
-    }
-
-    & > div {
-        @apply ml-2;
-    }
-}
-
-.fieldValuePreview {
-    @apply font-mono;
 }
 
 .fileDropArea {

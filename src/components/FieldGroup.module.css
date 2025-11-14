@@ -1,0 +1,13 @@
+﻿@reference "tailwindcss";
+
+.fieldGroup {
+    @apply bg-[#00000040] p-4 rounded-lg;
+
+    & > label {
+        @apply font-bold;
+    }
+
+    & > div {
+        @apply ml-2;
+    }
+}

@@ -1,0 +1,13 @@
+﻿@reference "tailwindcss";
+
+.field {
+    @apply flex flex-row gap-2 py-1;
+
+    & > label {
+        flex: 1 1 auto;
+    }
+}
+
+.label {
+    @apply flex flex-row items-center gap-1 text-yellow-200;
+}

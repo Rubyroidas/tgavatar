@@ -1,7 +1,6 @@
-﻿import { type ComponentProps, useRef } from 'react';
+﻿import type { ComponentProps } from 'react';
 
 import styles from './ColorPickerWithAlpha.module.css';
-import { colorWithAlphaToRGBA } from '../utils/colorWithAlphaToRGBA';
 
 export type ColorWithAlpha = {
     color: string; // #RRGGBB
@@ -12,32 +11,20 @@ type Props = Omit<ComponentProps<'input'>, 'type' | 'onChange'> & ColorWithAlpha
     onChange: (colorWithAlpha: ColorWithAlpha) => void;
 };
 export const ColorPickerWithAlpha = ({ onChange, color, opacity, ...rest }: Props) => {
-    const colorInputRef = useRef<HTMLInputElement>(null);
-    const handlePreviewClick = () => {
-        colorInputRef.current?.click();
-    };
-
     return (
         <div className={styles.container}>
             <div
-                className={styles.colorPreviewWrapper}
-                onClick={handlePreviewClick}
+                className={styles.colorInputWrapper}
             >
-                <div
-                    className={styles.colorPreview}
-                    style={{
-                        backgroundColor: colorWithAlphaToRGBA({color, opacity}),
-                    }}
+                <input
+                    {...rest}
+                    className={styles.colorInput}
+                    style={{ opacity: opacity / 100 }}
+                    type="color"
+                    value={color}
+                    onChange={e => onChange({ color: e.target.value, opacity })}
                 />
             </div>
-            <input
-                {...rest}
-                ref={colorInputRef}
-                className={styles.colorInput}
-                type="color"
-                value={color}
-                onChange={e => onChange({ color: e.target.value, opacity })}
-            />
             <input
                 type="range"
                 className={styles.opacityInput}

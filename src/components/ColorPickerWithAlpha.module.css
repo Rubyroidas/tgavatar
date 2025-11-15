@@ -4,7 +4,7 @@
     @apply flex flex-col gap-y-1;
 }
 
-.colorPreviewWrapper {
+.colorInputWrapper {
     cursor: pointer;
     --color-1: #ccc;
     --color-2: transparent;
@@ -19,12 +19,31 @@
     border-radius: 2em;
     overflow: hidden;
 }
-.colorPreview {
-    @apply h-4;
-}
 .colorInput {
-    @apply border-none outline-0 p-0 m-0 hidden;
+    width: 100%; /* or whatever size you want */
+    height: 100%;
+    border: none;
+    border-radius: 1em; /* optional */
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    overflow: hidden;
+
+    &::-webkit-color-swatch-wrapper {
+        padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+        border: none;
+        /*border-radius: 4px; !* optional, match parent *!*/
+    }
+
+    &::-moz-color-swatch {
+        border: none;
+        /*border-radius: 4px; !* optional *!*/
+    }
 }
+
 
 .opacityInput {
 

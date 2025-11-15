@@ -10,9 +10,11 @@ import { handleDownloadAsSVG } from './utils/handleDownloadAsSVG';
 import { handleDownloadAsPNG } from './utils/handleDownloadAsPNG';
 import { FieldGroup } from './components/FieldGroup';
 import { Field } from './components/Field';
-import { PageHeader } from './components/PageHeader.tsx';
-import { FieldValuePreview } from './components/FieldValuePreview.tsx';
+import { PageHeader } from './components/PageHeader';
+import { FieldValuePreview } from './components/FieldValuePreview';
 import { ALargeSmall } from 'lucide-react';
+import { TabsContent, TabsList, TabsRoot, TabsTrigger } from './components/Tabs';
+import { UserNameHelp } from './components/UserNameHelp';
 
 const MIN_ANGLE = 0;
 const MAX_ANGLE = 360;
@@ -93,49 +95,36 @@ export const App = () => {
             <div className={styles.layout}>
                 <div className={styles.settingsForm}>
                     <FieldGroup label="User avatar">
-                        <Field label={
-                            <>
+                        <TabsRoot
+                            defaultValue={isDefaultUserProfile ? '1' : '2'}
+                            onValueChange={(value) => toggleAvatarSource(value === '1')}
+                        >
+                            <TabsList aria-label="Manage your account">
+                                <TabsTrigger value="1">
+                                    User profile
+                                </TabsTrigger>
+                                <TabsTrigger value="2">
+                                    File
+                                </TabsTrigger>
+                            </TabsList>
+                            <TabsContent value="1">
+                                <UserNameHelp/>
                                 <input
-                                    type="checkbox"
-                                    checked={isDefaultUserProfile}
-                                    onChange={e => toggleAvatarSource(e.target.checked)}
+                                    value={userProfileLink}
+                                    title="Paste Telegram profile link or username"
+                                    onChange={(e) => setUserProfileLink(e.target.value)}
                                 />
-                                From user profile
-                            </>
-                        }>
-                            {isDefaultUserProfile ? (
-                                <>
-                                    <button className={styles.usernameHelpButton} popoverTarget="usernameHelp">❔</button>
-                                    <input
-                                        value={userProfileLink}
-                                        title="Paste Telegram profile link or username"
-                                        onChange={(e) => setUserProfileLink(e.target.value)}
-                                    />
-                                </>
-                            ) : (
+                            </TabsContent>
+                            <TabsContent value="2">
                                 <div
                                     {...dropZoneProps}
                                     className={styles.fileDropArea}
                                 >
                                     <div>Drop image here ...</div>
                                 </div>
-                            )}
-                        </Field>
+                            </TabsContent>
+                        </TabsRoot>
                     </FieldGroup>
-                    <div className={styles.usernamePopover} id="usernameHelp" popover="hint">
-                        User profile should be either:
-                        <ul>
-                            <li>
-                                <code>@durov</code>
-                            </li>
-                            <li>
-                                OR <code>https://t.me/durov</code>
-                            </li>
-                            <li>
-                                OR <code>t.me/durov</code>
-                            </li>
-                        </ul>
-                    </div>
                     <FieldGroup label="Text">
                         <Field label="Color">
                             <FieldValuePreview>

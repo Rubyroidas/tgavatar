@@ -1,0 +1,28 @@
+﻿@reference "tailwindcss";
+
+.usernameHelpButton {
+    anchor-name: --username-help;
+    @apply rounded-full aspect-square;
+}
+
+.usernamePopover {
+    position: absolute;
+    position-anchor: --username-help;
+    position-area: bottom center;
+    outline: none;
+    inset: auto;
+    margin: 0;
+    @apply p-4;
+    width: max-content;
+
+    &:popover-open {
+        display: block;
+    }
+    &::backdrop {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    & > ul {
+        @apply text-gray-200 py-0 my-0 pl-6;
+    }
+}

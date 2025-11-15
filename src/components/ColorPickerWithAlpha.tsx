@@ -1,6 +1,7 @@
 ﻿import type { ComponentProps } from 'react';
 
 import styles from './ColorPickerWithAlpha.module.css';
+import { colorWithAlphaToRGBA } from '../utils/colorWithAlphaToRGBA';
 
 export type ColorWithAlpha = {
     color: string; // #RRGGBB
@@ -13,7 +14,15 @@ type Props = Omit<ComponentProps<'input'>, 'type' | 'onChange'> & ColorWithAlpha
 export const ColorPickerWithAlpha = ({ onChange, color, opacity, ...rest }: Props) => {
 
     return (
-        <>
+        <div className={styles.container}>
+            <div className={styles.colorPreviewWrapper}>
+                <div
+                    className={styles.colorPreview}
+                    style={{
+                        backgroundColor: colorWithAlphaToRGBA({color, opacity}),
+                    }}
+                />
+            </div>
             <input
                 {...rest}
                 className={styles.colorInput}
@@ -23,11 +32,12 @@ export const ColorPickerWithAlpha = ({ onChange, color, opacity, ...rest }: Prop
             />
             <input
                 type="range"
+                className={styles.opacityInput}
                 value={opacity}
                 min={0}
                 max={100}
                 onChange={e => onChange({ color, opacity: parseInt(e.target.value) })}
             />
-        </>
+        </div>
     );
 }

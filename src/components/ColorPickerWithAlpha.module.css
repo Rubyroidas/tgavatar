@@ -5,6 +5,7 @@
 }
 
 .colorPreviewWrapper {
+    cursor: pointer;
     --color-1: #ccc;
     --color-2: transparent;
     background-color: #fff;

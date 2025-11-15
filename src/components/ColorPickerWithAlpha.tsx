@@ -1,4 +1,4 @@
-﻿import type { ComponentProps } from 'react';
+﻿import { type ComponentProps, useRef } from 'react';
 
 import styles from './ColorPickerWithAlpha.module.css';
 import { colorWithAlphaToRGBA } from '../utils/colorWithAlphaToRGBA';
@@ -12,10 +12,17 @@ type Props = Omit<ComponentProps<'input'>, 'type' | 'onChange'> & ColorWithAlpha
     onChange: (colorWithAlpha: ColorWithAlpha) => void;
 };
 export const ColorPickerWithAlpha = ({ onChange, color, opacity, ...rest }: Props) => {
+    const colorInputRef = useRef<HTMLInputElement>(null);
+    const handlePreviewClick = () => {
+        colorInputRef.current?.click();
+    };
 
     return (
         <div className={styles.container}>
-            <div className={styles.colorPreviewWrapper}>
+            <div
+                className={styles.colorPreviewWrapper}
+                onClick={handlePreviewClick}
+            >
                 <div
                     className={styles.colorPreview}
                     style={{
@@ -25,6 +32,7 @@ export const ColorPickerWithAlpha = ({ onChange, color, opacity, ...rest }: Prop
             </div>
             <input
                 {...rest}
+                ref={colorInputRef}
                 className={styles.colorInput}
                 type="color"
                 value={color}

@@ -16,7 +16,6 @@
     @apply bg-gray-700 border-l-gray-200 border-l-6 text-gray-400 px-2;
 }
 
-
 .fileDropArea {
     box-sizing: border-box;
     display: flex;
@@ -42,6 +41,10 @@
             background-color: transparent;
         }
     }
+}
+
+.avatarContainer {
+    @apply flex flex-col gap-2 items-center;
 }
 
 .downloads {

@@ -1,40 +1,38 @@
 ﻿@reference "tailwindcss";
 
-@layer components {
-    .tabsRoot {
-        @apply flex w-[300px] flex-col;
-    }
+.tabsRoot {
+    @apply flex w-[300px] flex-col;
+}
 
-    .tabsTrigger {
-        @apply flex flex-1 p-4 cursor-pointer select-none items-center justify-center
-            leading-none outline-none
-            shadow-none
-            border-none
-        bg-[#00000040]
-        ;
-    }
+.tabsTrigger {
+    @apply flex flex-1 p-4 cursor-pointer select-none items-center justify-center
+    leading-none outline-none
+    shadow-none
+    border-none
+    bg-[#00000040]
+    ;
+}
 
-    .tabsTrigger:hover {
-        @apply text-amber-500;
-    }
+.tabsTrigger:hover {
+    @apply text-amber-500;
+}
 
-    .tabsTrigger:first-child {
-        @apply rounded-tl-md rounded-l-lg;
-    }
+.tabsTrigger:first-child {
+    @apply rounded-tl-md rounded-l-lg;
+}
 
-    .tabsTrigger:last-child {
-        @apply rounded-tr-md rounded-r-lg;
-    }
+.tabsTrigger:last-child {
+    @apply rounded-tr-md rounded-r-lg;
+}
 
-    .tabsTrigger[data-state=active] {
-        @apply font-bold text-amber-500 bg-[#00000080];
-    }
+.tabsTrigger[data-state=active] {
+    @apply font-bold text-amber-500 bg-[#00000080];
+}
 
-    .tabsList {
-        @apply flex shrink-0;
-    }
+.tabsList {
+    @apply flex shrink-0;
+}
 
-    .tabsContent {
-        @apply grow rounded-b-md p-5 outline-none;
-    }
+.tabsContent {
+    @apply grow rounded-b-md p-5 outline-none;
 }

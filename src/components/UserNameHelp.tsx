@@ -1,8 +1,9 @@
-﻿import styles from './UserNameHelp.module.css';
+﻿import { Button } from './Button';
+import styles from './UserNameHelp.module.css';
 
 export const UserNameHelp = () => (
     <>
-        <button className={styles.usernameHelpButton} popoverTarget="usernameHelp">❔</button>
+        <Button className={styles.usernameHelpButton} popoverTarget="usernameHelp">❔</Button>
         <div className={styles.usernamePopover} id="usernameHelp" popover="hint">
             User profile should be either:
             <ul>

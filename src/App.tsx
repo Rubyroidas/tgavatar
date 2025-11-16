@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+// import { ALargeSmall } from 'lucide-react';
 import { Avatar, R } from './Avatar';
 import styles from './App.module.css';
 import { useDropZone } from './hooks/useDropZone';
@@ -12,9 +13,9 @@ import { FieldGroup } from './components/FieldGroup';
 import { Field } from './components/Field';
 import { PageHeader } from './components/PageHeader';
 import { FieldValuePreview } from './components/FieldValuePreview';
-import { ALargeSmall } from 'lucide-react';
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from './components/Tabs';
 import { UserNameHelp } from './components/UserNameHelp';
+import { Button } from './components/Button';
 
 const MIN_ANGLE = 0;
 const MAX_ANGLE = 360;
@@ -110,6 +111,7 @@ export const App = () => {
                             <TabsContent value="1">
                                 <UserNameHelp/>
                                 <input
+                                    type="text"
                                     value={userProfileLink}
                                     title="Paste Telegram profile link or username"
                                     onChange={(e) => setUserProfileLink(e.target.value)}
@@ -138,6 +140,7 @@ export const App = () => {
                         </Field>
                         <Field label="Text">
                             <input
+                                type="text"
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
                             />
@@ -163,7 +166,8 @@ export const App = () => {
                             />
                         </Field>
                         <Field label={<>
-                            <ALargeSmall /> Font size
+                            {/*<ALargeSmall/>*/}
+                            Font size
                         </>}>
                             <FieldValuePreview>
                                 {fontSize}
@@ -241,30 +245,32 @@ export const App = () => {
                             />
                         </Field>
                     </FieldGroup>
+                </div>
+                <div className={styles.avatarContainer}>
+                    {userAvatarUrl && (
+                        <Avatar
+                            url={userAvatarUrl}
+                            text={text}
+                            textOffsetY={textOffsetY}
+                            fontSize={fontSize}
+                            labelColor={labelColor}
+                            labelDistance={labelDistance}
+                            labelAngle={labelAngle}
+                            borderColor={borderColor}
+                            borderWidth={borderWidth}
+                            textColor={textColor}
+                            flipTextY={flipTextY}
+                        />
+                    )}
                     <div className={styles.downloads}>
-                        <button onClick={() => handleDownloadAsSVG('avatar', username)}>
+                        <Button onClick={() => handleDownloadAsSVG('avatar', username)}>
                             SVG Download
-                        </button>
-                        <button onClick={() => handleDownloadAsPNG('avatar', username)}>
+                        </Button>
+                        <Button onClick={() => handleDownloadAsPNG('avatar', username)}>
                             PNG Download
-                        </button>
+                        </Button>
                     </div>
                 </div>
-                {userAvatarUrl && (
-                    <Avatar
-                        url={userAvatarUrl}
-                        text={text}
-                        textOffsetY={textOffsetY}
-                        fontSize={fontSize}
-                        labelColor={labelColor}
-                        labelDistance={labelDistance}
-                        labelAngle={labelAngle}
-                        borderColor={borderColor}
-                        borderWidth={borderWidth}
-                        textColor={textColor}
-                        flipTextY={flipTextY}
-                    />
-                )}
             </div>
         </div>
     );

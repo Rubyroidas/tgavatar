@@ -11,9 +11,9 @@
     position-area: bottom center;
     outline: none;
     inset: auto;
-    margin: 0;
-    @apply p-4;
+    @apply p-4 m-0;
     width: max-content;
+    box-shadow: 0 0 2em #fff;
 
     &:popover-open {
         display: block;

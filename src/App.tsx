@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-// import { ALargeSmall } from 'lucide-react';
+import {
+    ALargeSmall,
+    DraftingCompass,
+    FlipVertical2,
+    Palette,
+    RulerDimensionLine,
+    TextInitial,
+} from 'lucide-react';
 import { Avatar, R } from './Avatar';
 import styles from './App.module.css';
 import { useDropZone } from './hooks/useDropZone';
@@ -40,7 +47,7 @@ export const App = () => {
     const [ fontSize, setFontSize ] = useState(48);
     // border
     const [ borderColor, setBorderColor ] = useState<ColorWithAlpha>({ color: '#ff0000', opacity: 100 });
-    const [ borderWidth, setBorderWidth ] = useState(12);
+    const [ borderThickness, setBorderThickness ] = useState(12);
     // label
     const [ labelColor, setLabelColor ] = useState<ColorWithAlpha>({ color: '#ff0000', opacity: 100 });
     const [ labelDistance, setLabelDistance ] = useState(80);
@@ -128,31 +135,31 @@ export const App = () => {
                         </TabsRoot>
                     </FieldGroup>
                     <FieldGroup label="Text">
-                        <Field label="Color">
-                            <FieldValuePreview>
-                                {textColor.color}, {textColor.opacity}%
-                            </FieldValuePreview>
+                        <Field label="Color" icon={<Palette />}>
+                            {/*<FieldValuePreview>*/}
+                            {/*    {textColor.color}, {textColor.opacity}%*/}
+                            {/*</FieldValuePreview>*/}
                             <ColorPickerWithAlpha
                                 color={textColor.color}
                                 opacity={textColor.opacity}
                                 onChange={setTextColor}
                             />
                         </Field>
-                        <Field label="Text">
+                        <Field label="Text" icon={<TextInitial />}>
                             <input
                                 type="text"
                                 value={text}
                                 onChange={(e) => setText(e.target.value)}
                             />
                         </Field>
-                        <Field label="Flip verically">
+                        <Field label="Flip verically" icon={<FlipVertical2 />}>
                             <input
                                 type="checkbox"
                                 checked={flipTextY}
                                 onChange={e => setFlipTextY(e.target.checked)}
                             />
                         </Field>
-                        <Field label="Offset from center">
+                        <Field label="Offset from center" icon={<RulerDimensionLine />}>
                             <FieldValuePreview>
                                 {textOffsetY}
                             </FieldValuePreview>
@@ -165,10 +172,7 @@ export const App = () => {
                                 onChange={(e) => setTextOffsetY(parseInt(e.target.value, 10))}
                             />
                         </Field>
-                        <Field label={<>
-                            {/*<ALargeSmall/>*/}
-                            Font size
-                        </>}>
+                        <Field icon={<ALargeSmall/>} label="Font size">
                             <FieldValuePreview>
                                 {fontSize}
                             </FieldValuePreview>
@@ -183,42 +187,42 @@ export const App = () => {
                         </Field>
                     </FieldGroup>
                     <FieldGroup label="Border">
-                        <Field label="Color">
-                            <FieldValuePreview>
-                                {borderColor.color}, {borderColor.opacity}%
-                            </FieldValuePreview>
+                        <Field label="Color" icon={<Palette />}>
+                            {/*<FieldValuePreview>*/}
+                            {/*    {borderColor.color}, {borderColor.opacity}%*/}
+                            {/*</FieldValuePreview>*/}
                             <ColorPickerWithAlpha
                                 color={borderColor.color}
                                 opacity={borderColor.opacity}
                                 onChange={setBorderColor}
                             />
                         </Field>
-                        <Field label="Width">
+                        <Field label="Thickness" icon={<RulerDimensionLine />}>
                             <FieldValuePreview>
-                                {borderWidth}
+                                {borderThickness}
                             </FieldValuePreview>
                             <input
                                 type="range"
-                                value={borderWidth}
+                                value={borderThickness}
                                 min={MIN_BORDER_WIDTH}
                                 max={MAX_BORDER_WIDTH}
                                 step={1}
-                                onChange={(e) => setBorderWidth(parseInt(e.target.value, 10))}
+                                onChange={(e) => setBorderThickness(parseInt(e.target.value, 10))}
                             />
                         </Field>
                     </FieldGroup>
                     <FieldGroup label="Label">
-                        <Field label="Color">
-                            <FieldValuePreview>
-                                {labelColor.color}, {labelColor.opacity}%
-                            </FieldValuePreview>
+                        <Field label="Color" icon={<Palette />}>
+                            {/*<FieldValuePreview>*/}
+                            {/*    {labelColor.color}, {labelColor.opacity}%*/}
+                            {/*</FieldValuePreview>*/}
                             <ColorPickerWithAlpha
                                 color={labelColor.color}
                                 opacity={labelColor.opacity}
                                 onChange={setLabelColor}
                             />
                         </Field>
-                        <Field label="Angle">
+                        <Field label="Angle" icon={<DraftingCompass />}>
                             <FieldValuePreview>
                                 {labelAngle}&deg;
                             </FieldValuePreview>
@@ -231,7 +235,7 @@ export const App = () => {
                                 onChange={(e) => setLabelAngle(parseInt(e.target.value, 10))}
                             />
                         </Field>
-                        <Field label="Distance from center">
+                        <Field label="Distance from center" icon={<RulerDimensionLine />}>
                             <FieldValuePreview>
                                 {labelDistance}
                             </FieldValuePreview>
@@ -257,7 +261,7 @@ export const App = () => {
                             labelDistance={labelDistance}
                             labelAngle={labelAngle}
                             borderColor={borderColor}
-                            borderWidth={borderWidth}
+                            borderThickness={borderThickness}
                             textColor={textColor}
                             flipTextY={flipTextY}
                         />

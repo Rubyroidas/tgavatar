@@ -3,11 +3,14 @@
 import styles from './Field.module.css';
 
 type Props = PropsWithChildren & {
-    label: string | ReactElement;
+    icon?: ReactElement;
+    label: string;
 }
-export const Field = ({ label, children }: Props) => (
+export const Field = ({ icon, label, children }: Props) => (
     <div className={styles.field}>
-        <label className={styles.label}>{label}</label>
+        <label className={styles.label}>
+            {icon} {label}
+        </label>
         {children}
     </div>
 );

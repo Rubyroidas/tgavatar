@@ -10,4 +10,8 @@
 
 .label {
     @apply flex flex-row items-center gap-1 text-yellow-200;
+
+    & > svg {
+        color: #c8c8c8;
+    }
 }

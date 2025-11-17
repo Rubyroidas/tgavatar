@@ -18,7 +18,7 @@ type AvatarProps = {
     labelDistance: number;
     labelAngle: number;
     borderColor: ColorWithAlpha;
-    borderWidth: number;
+    borderThickness: number;
 };
 export const Avatar = (props: AvatarProps) => {
     const {
@@ -30,7 +30,7 @@ export const Avatar = (props: AvatarProps) => {
         labelDistance,
         labelAngle,
         borderColor,
-        borderWidth,
+        borderThickness,
         textColor,
         flipTextY,
     } = props;
@@ -38,11 +38,11 @@ export const Avatar = (props: AvatarProps) => {
     const deltaAngle = Math.acos(labelDistance / R);
     const startAngle = labelAngleRad - deltaAngle;
     const endAngle = labelAngleRad + deltaAngle;
-    const sx = R + ((R - borderWidth) * Math.cos(startAngle));
-    const sy = R + ((R - borderWidth) * Math.sin(startAngle));
-    const ex = R + ((R - borderWidth) * Math.cos(endAngle));
-    const ey = R + ((R - borderWidth) * Math.sin(endAngle));
-    const labelArcParams = [ 'M', sx, sy, 'A', (R - borderWidth), (R - borderWidth), 0, 0, 1, ex, ey, 'L', sx, sy, 'Z', ].join(' ');
+    const sx = R + ((R - borderThickness) * Math.cos(startAngle));
+    const sy = R + ((R - borderThickness) * Math.sin(startAngle));
+    const ex = R + ((R - borderThickness) * Math.cos(endAngle));
+    const ey = R + ((R - borderThickness) * Math.sin(endAngle));
+    const labelArcParams = [ 'M', sx, sy, 'A', (R - borderThickness), (R - borderThickness), 0, 0, 1, ex, ey, 'L', sx, sy, 'Z', ].join(' ');
     const textAngle = labelAngle + (flipTextY ? 180 : 0) - 90;
     const textOffsetX = userTextOffsetY * Math.cos(labelAngleRad);
     const textOffsetY = userTextOffsetY * Math.sin(labelAngleRad);
@@ -70,7 +70,7 @@ export const Avatar = (props: AvatarProps) => {
                     <circle
                         cx={R}
                         cy={R}
-                        r={R - borderWidth - 0.25}
+                        r={R - borderThickness - 0.25}
                         fill="black"
                     />
                 </mask>
@@ -116,7 +116,7 @@ export const Avatar = (props: AvatarProps) => {
                 mask="url(#labelMask)"
             />
 
-            {borderWidth > 0 && (
+            {borderThickness > 0 && (
                 <circle
                     cx={R}
                     cy={R}

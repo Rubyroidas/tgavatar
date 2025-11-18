@@ -7,7 +7,7 @@ import {
     RulerDimensionLine,
     TextInitial,
 } from 'lucide-react';
-import { Avatar, R } from './Avatar';
+import { Avatar } from './Avatar';
 import styles from './App.module.css';
 import { useDropZone } from './hooks/useDropZone';
 import { loadImageAsBase64 } from './utils/loadImageAsBase64';
@@ -23,39 +23,45 @@ import { FieldValuePreview } from './components/FieldValuePreview';
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from './components/Tabs';
 import { UserNameHelp } from './components/UserNameHelp';
 import { Button } from './components/Button';
+import {
+    R, DEFAULT_USER_PROFILE_LINK,
 
-const MIN_ANGLE = 0;
-const MAX_ANGLE = 360;
-const MIN_BORDER_WIDTH = 0;
-const MAX_BORDER_WIDTH = 50;
-const MIN_FONT_SIZE = 10;
-const MAX_FONT_SIZE = 100;
-const MIN_TEXT_OFFSET_Y = 0;
-const MAX_TEXT_OFFSET_Y = 200;
+    DEFAULT_TEXT_COLOR, DEFAULT_TEXT, DEFAULT_TEXT_FLIP_Y,
+    DEFAULT_TEXT_OFFSET_Y, MIN_TEXT_OFFSET_Y, MAX_TEXT_OFFSET_Y,
+    DEFAULT_TEXT_FONT_SIZE, MIN_FONT_SIZE, MAX_FONT_SIZE,
+
+    DEFAULT_BORDER_COLOR, DEFAULT_BORDER_THICKNESS,
+    MIN_BORDER_THICKNESS, MAX_BORDER_THICKNESS,
+
+    DEFAULT_LABEL_ANGLE, MIN_LABEL_ANGLE, MAX_LABEL_ANGLE,
+    DEFAULT_LABEL_COLOR,
+    DEFAULT_LABEL_DISTANCE,
+} from './settings';
 
 export const App = () => {
     const [ isDefaultUserProfile, setIsDefaultUserProfile ] = useState(true);
     // avatar url
-    const [ userProfileLink, setUserProfileLink ] = useState('@durov');
+    const [ userProfileLink, setUserProfileLink ] = useState(DEFAULT_USER_PROFILE_LINK);
     const [ username, setUsername ] = useState('');
     const [ userAvatarUrl, setUserAvatarUrl ] = useState('');
     // text
-    const [ textColor, setTextColor ] = useState<ColorWithAlpha>({ color: '#ffffff', opacity: 100 });
-    const [ text, setText ] = useState('GD');
-    const [ flipTextY, setFlipTextY ] = useState(false);
-    const [ textOffsetY, setTextOffsetY ] = useState(40);
-    const [ fontSize, setFontSize ] = useState(48);
+    const [ textColor, setTextColor ] = useState(DEFAULT_TEXT_COLOR);
+    const [ text, setText ] = useState(DEFAULT_TEXT);
+    const [ flipTextY, setFlipTextY ] = useState(DEFAULT_TEXT_FLIP_Y);
+    const [ textOffsetY, setTextOffsetY ] = useState(DEFAULT_TEXT_OFFSET_Y);
+    const [ fontSize, setFontSize ] = useState(DEFAULT_TEXT_FONT_SIZE);
     // border
-    const [ borderColor, setBorderColor ] = useState<ColorWithAlpha>({ color: '#ff0000', opacity: 100 });
-    const [ borderThickness, setBorderThickness ] = useState(12);
+    const [ borderColor, setBorderColor ] = useState<ColorWithAlpha>(DEFAULT_BORDER_COLOR);
+    const [ borderThickness, setBorderThickness ] = useState(DEFAULT_BORDER_THICKNESS);
     // label
-    const [ labelColor, setLabelColor ] = useState<ColorWithAlpha>({ color: '#ff0000', opacity: 100 });
-    const [ labelDistance, setLabelDistance ] = useState(80);
-    const [ labelAngle, setLabelAngle ] = useState(108);
+    const [ labelColor, setLabelColor ] = useState<ColorWithAlpha>(DEFAULT_LABEL_COLOR);
+    const [ labelDistance, setLabelDistance ] = useState(DEFAULT_LABEL_DISTANCE);
+    const [ labelAngle, setLabelAngle ] = useState(DEFAULT_LABEL_ANGLE);
 
     const toggleAvatarSource = (isDefaultProfile: boolean) => {
         if (isDefaultProfile) {
-            setUsername('durov');
+            setUserProfileLink(DEFAULT_USER_PROFILE_LINK);
+            setUsername(DEFAULT_USER_PROFILE_LINK.replace('@', ''));
         } else {
             setUsername('avatar');
         }
@@ -204,8 +210,8 @@ export const App = () => {
                             <input
                                 type="range"
                                 value={borderThickness}
-                                min={MIN_BORDER_WIDTH}
-                                max={MAX_BORDER_WIDTH}
+                                min={MIN_BORDER_THICKNESS}
+                                max={MAX_BORDER_THICKNESS}
                                 step={1}
                                 onChange={(e) => setBorderThickness(parseInt(e.target.value, 10))}
                             />
@@ -229,8 +235,8 @@ export const App = () => {
                             <input
                                 type="range"
                                 value={labelAngle}
-                                min={MIN_ANGLE}
-                                max={MAX_ANGLE}
+                                min={MIN_LABEL_ANGLE}
+                                max={MAX_LABEL_ANGLE}
                                 step={1}
                                 onChange={(e) => setLabelAngle(parseInt(e.target.value, 10))}
                             />

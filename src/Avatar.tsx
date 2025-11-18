@@ -2,9 +2,9 @@
 import { colorWithAlphaToRGBA } from './utils/colorWithAlphaToRGBA';
 
 import styles from './Avatar.module.css';
+import { R } from './settings';
 
-export const SIZE = 320;
-export const R = SIZE / 2;
+export const SIZE = R * 2;
 
 type AvatarProps = {
     url: string;
